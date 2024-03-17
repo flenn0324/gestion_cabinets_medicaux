@@ -5,8 +5,12 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useFetchDoctorsQuery } from "../../../store/apis/DoctorsApi";
 
 function Medecins() {
+
+    const { data, error, isLoading } = useFetchDoctorsQuery();
+
 
     const dataTransformed = [
         {

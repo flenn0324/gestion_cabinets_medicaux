@@ -11,9 +11,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import { useLoginUserMutation } from "../../store";
 
 
 function Copyright(props) {
+  
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -28,13 +30,24 @@ function Copyright(props) {
 
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  
+  const [login, results] = useLoginUserMutation();
+  
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    const info = {
+      email: data.get('email'),
+      password: data.get('password'),
+    }
+    console.log(info);
+
+    const response = await login(info);
+    console.log(response);
   };
 
   return (
