@@ -4,10 +4,10 @@ const mongoose = require("mongoose")
 
 // create the schema
 const signesVitauxSchema = new mongoose.Schema({
-  frequence_cardiaque : Double,
-  tension_arterielle : Double,
-  frequence_resperatoire : Double,
-  temperature_corporelle : Double,
+  frequence_cardiaque : String,
+  tension_arterielle : String,
+  frequence_resperatoire : String,
+  temperature_corporelle : String,
   nss: String,
   date_creation: {
     type: Date,

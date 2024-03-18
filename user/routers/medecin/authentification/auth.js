@@ -34,7 +34,12 @@ router.post("/signin", async (req, res)=>{
       jwt: userJwt
     }
     return res.status(200).send({
-      doctorInfos : doctorFound.email,
+      doctorInfos : {
+        email : doctorFound.email,
+        id : doctorFound._id,
+        nom: doctorFound.nom,
+        prenom: doctorFound.prenom
+      },
       message:"bienvenu."
     })
   } else {

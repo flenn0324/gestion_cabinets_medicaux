@@ -58,9 +58,9 @@ router.post('/signin', async (req, res) => {
   if (admin_exists) {
     // know lets check for its password
     const hashedPassword = admin_exists.password
-    const match = bcrypt.compare(admin_exists.password, hashedPassword)
     
-    if (match) {
+    
+    if (information_admin.password == hashedPassword) {
       // creation of the jwt
        // generate jwt
     const userJwt = generateAccessToken(admin_exists)

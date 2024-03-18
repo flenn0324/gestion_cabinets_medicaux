@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 
 // creation of the schema
 const patientSchema = new mongoose.Schema({
+  createdBy: String,
   nom: String,
   prenom: String,
   numero_securite_social: String,

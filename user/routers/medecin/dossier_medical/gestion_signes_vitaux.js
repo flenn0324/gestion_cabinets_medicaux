@@ -21,8 +21,8 @@ router.post("/add", async (req, res)=>{
 })
 
 //get all liste des signes vitaux
-router.get("/", async (req, res)=>{
-  const listeSignesVitaux = await SignesVitaux.find()
+router.get("/:nss", async (req, res)=>{
+  const listeSignesVitaux = await SignesVitaux.find({nss: req.params.nss})
 
   return res.status(200).send({
     listeSignesVitaux : listeSignesVitaux,
@@ -31,15 +31,16 @@ router.get("/", async (req, res)=>{
 })
 
 
-// get one signe vitaux
-router.get("/:id", (req, res)=>{
-
-})
-
-
 //delete signe vitaux
-router.delete("/:id", (req, res)=>{
+router.delete("/:id", async(req, res)=>{
+  const id_signes = req.params.id
 
+  // search for it and send it 
+  res.status(200).send(
+    {
+      signesVitaux : await SignesVitaux.deleteOne({_id:id_signes})
+    }
+  )
 })
 
 
