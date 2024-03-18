@@ -5,37 +5,61 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useFetchCliniquesQuery } from "../../../store/apis/CliniquesApi";
 
 function Cliniques() {
 
-    const dataTransformed = [
-        {
-            id:1,
-            adresse: "kdkcdkjcdjkcd",
-            nom: 'clinique bibicho',
-        },
-        {
-            id:2,
-            adresse: "alo alo kda mena",
-            nom: 'clinique dabicho',
-        },
-        {
-            id:3,
-            adresse: "mena melhih dabich",
-            nom: 'clinique pino',
-        },
-      ];
+  const { data, error, isLoading } = useFetchCliniquesQuery();
+
+  if (error) {
+    return (
+      <Container>
+        <h1 className="mt-5 text-center">ERREUR 500</h1>
+        <h3 className="m-5 text-center">
+          erreur de chargement du liste des cliniques
+        </h3>
+      </Container>
+    );
+  }
+
+
+  const dataTransformed = isLoading ? [] : data.listeClinique.map((item) => {
+    return {
+      id: item._id,
+      nom: item.nom,
+      numero_rue: item.address?.numero_rue || '', 
+      nom_rue: item.address?.nom_rue || '', 
+      code_postal: item.address?.code_postal || '', 
+      ville: item.address?.ville || '', 
+      pays: item.address?.pays || '',
+    };
+  });
 
   const columns = [
     { field: "id", headerName: "ID" },
     {
-        field: "nom",
-        headerName: "Nom",
-        flex: 1,
-      },
+      field: "nom",
+      headerName: "Nom",
+      flex: 1,
+    },
     {
-      field: "adresse",
-      headerName: "Adresse",
+      field: "numero_rue",
+      headerName: "Numéro rue",
+      flex: 1,
+    },
+    {
+      field: "nom_rue",
+      headerName: "Nom rue",
+      flex: 1,
+    },
+    {
+      field: "ville",
+      headerName: "Ville",
+      flex: 1,
+    },
+    {
+      field: "pays",
+      headerName: "Pays",
       flex: 1,
     },
     {

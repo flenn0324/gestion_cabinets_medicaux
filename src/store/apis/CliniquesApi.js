@@ -30,18 +30,16 @@ const cliniquesApi = createApi({
                 invalidatesTags:['Cliniques'],
                 query:(clinique)=>{
                     return{
-                        url:'/cliniques',
+                        url:'/cliniques/create',
                         params:{},
                         method: 'POST',
                         body:{
-                            siren:clinique.siren,
-                            greffe: clinique.greffe,
-                            forme_sociale: clinique.forme_sociale,
-                            denomination: clinique.denomination,
-                            objet_sociale: clinique.objet_sociale,
-                            date: clinique.date,
-                            duree: clinique.duree,
-                            capital_social: clinique.capital_social,
+                            nom:clinique.nom,
+                            address:{nom_rue: clinique.nom_rue,
+                                numero_rue: clinique.numero_rue,
+                                ville: clinique.ville,
+                                pays: clinique.pays,
+                                code_postal: clinique.code_postal,}
                         }
                     };
                 }
@@ -50,17 +48,15 @@ const cliniquesApi = createApi({
                 invalidatesTags: ['Cliniques'],
                 query: (clinique) => ({
                   url: `/cliniques/${clinique.id}`,
-                  method: 'PATCH', // Assuming your API supports PUT for updates, adjust accordingly
+                  method: 'POST', 
                   body: {
-                    siren: clinique.siren,
-                    greffe: clinique.greffe,
-                    forme_sociale: clinique.forme_sociale,
-                    denomination: clinique.denomination,
-                    objet_sociale: clinique.objet_sociale,
-                    date: clinique.date,
-                    duree: clinique.duree,
-                    capital_social: clinique.capital_social,
-                  },
+                    nom:clinique.nom,
+                    address:{nom_rue: clinique.nom_rue,
+                        numero_rue: clinique.numero_rue,
+                        ville: clinique.ville,
+                        pays: clinique.pays,
+                        code_postal: clinique.code_postal,}
+                }
                 }),
               }),
             removeClinique: builder.mutation({

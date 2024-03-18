@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button } from "@mui/material";
 import HeadContent from '../../../components/dashboard/HeadContent';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -9,39 +9,31 @@ import { useFetchDoctorsQuery } from "../../../store/apis/DoctorsApi";
 
 function Medecins() {
 
-    //const { data, error, isLoading } = useFetchDoctorsQuery();
+    const { data, error, isLoading } = useFetchDoctorsQuery();
 
 
-    const dataTransformed = [
-        {
-            id: 1,
-            nom: "brahimi",
-            prenom: "zakaria",
-            date_naissance: "03/02/2021",
-            lieu_naissance: 'alger',
-            adresse: "elharrach kdjh lkf",
-            email: "zaki@gmail.com",
+   if (error) {
+    return (
+      <Container>
+        <h1 className="mt-5 text-center">ERREUR 500</h1>
+        <h3 className="m-5 text-center">
+          erreur de chargement du liste des medecins
+        </h3>
+      </Container>
+    );
+  }
 
-        },
-        {
-            id: 2,
-            nom: "gggg",
-            prenom: "vvvv",
-            date_naissance: "03/02/2021",
-            lieu_naissance: 'alger',
-            adresse: "elharrach kdjh lkf",
-            email: "zaki@gmail.com",
-        },
-        {
-            id: 3,
-            nom: "sszszs",
-            prenom: "ffff",
-            date_naissance: "03/02/2021",
-            lieu_naissance: 'alger',
-            adresse: "elharrach kdjh lkf",
-            email: "zaki@gmail.com",
-        },
-    ];
+
+    const dataTransformed = isLoading ? [] : data.doctors.map((item) => {
+        return {
+          id: item._id,
+          nom: item.nom,
+          prenom: item.prenom,
+          date_naissance: item.date_naissance,
+          email: item.email,
+          id_clinique: item.id_clinique,
+        };
+      });
 
     const columns = [
         { field: "id", headerName: "ID" },
@@ -107,6 +99,8 @@ function Medecins() {
                 <Box m="40px 0 0 0" height="75vh">
                     <DataGrid
                         checkboxSelection
+                        loading={isLoading}
+                        error={error}
                         rows={dataTransformed}
                         columns={columns}
                         components={{ Toolbar: GridToolbar }}

@@ -5,24 +5,34 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadContent from '../../../components/dashboard/HeadContent';
 import "../../../components/dashboard/dashboard.css";
+import { useAddDoctorMutation } from "../../../store/apis/DoctorsApi";
+import Alert from '@mui/material/Alert';
+
 
 const AddMedecin = () => {
+  const[AddDoctor,results] = useAddDoctorMutation();
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const alert =()=>{
+    return (<Alert severity="success">This is a success alert — check it out!</Alert>);
+  }
 
   const initialValues = {
     nom : "",
     prenom: "",
     date_naissance: "",
-    lieu_naissance: "",
-    adresse: "",
+    id_clinique: "",
+    password: "",
     email: "",
   };
 
 
   const handleFormSubmit = async (values) => {
     console.log(values);
-    window.location.replace('/admin'); 
+    await AddDoctor(values);
+    alert();
+    window.location.replace('/admin/medecins'); 
   };
 
   return (
@@ -97,13 +107,13 @@ const AddMedecin = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Lieu de naissance"
+                label="Clinique"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lieu_naissance}
-                name="lieu_naissance"
-                error={!!touched.lieu_naissance && !!errors.lieu_naissance}
-                helperText={touched.lieu_naissance && errors.lieu_naissance}
+                value={values.id_clinique}
+                name="id_clinique"
+                error={!!touched.id_clinique && !!errors.id_clinique}
+                helperText={touched.id_clinique && errors.id_clinique}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -122,14 +132,14 @@ const AddMedecin = () => {
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Adresse"
+                type="password"
+                label="Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.adresse}
-                name="adresse"
-                error={!!touched.adresse && !!errors.adresse}
-                helperText={touched.adresse && errors.adresse}
+                value={values.password}
+                name="password"
+                error={!!touched.password && !!errors.password}
+                helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
@@ -150,9 +160,9 @@ const checkoutSchema = yup.object().shape({
   nom: yup.string().required("required"),
   prenom: yup.string().required("required"),
   date_naissance: yup.string().required("required"),
-  lieu_naissance: yup.string().required("required"),
+  id_clinique: yup.string().required("required"),
   email: yup.string().required("required"),
-  adresse: yup.string().required("required"),
+  password: yup.string().required("required"),
 });
 
 export default AddMedecin;

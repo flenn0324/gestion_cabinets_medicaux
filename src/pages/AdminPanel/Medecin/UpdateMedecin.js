@@ -6,6 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadContent from '../../../components/dashboard/HeadContent';
 import "../../../components/dashboard/dashboard.css";
 import { useLocation } from "react-router-dom";
+import { useUpdateDoctorMutation } from "../../../store/apis/DoctorsApi";
 
 const UpdateMedecin = () => {
 
@@ -23,10 +24,15 @@ const UpdateMedecin = () => {
         email: medecin.email,
     };
 
+    const [UpdateDoctor, results] = useUpdateDoctorMutation();
+
 
     const handleFormSubmit = async (values) => {
         console.log(values);
-        window.location.replace('/admin');
+        values.id = medecin.id;
+        console.log(values);
+        await UpdateDoctor(values);
+        window.location.replace('/admin/medecin');
     };
 
     return (
@@ -58,6 +64,7 @@ const UpdateMedecin = () => {
                                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                             }}
                         >
+                            
                             <TextField
                                 fullWidth
                                 variant="filled"
@@ -101,13 +108,13 @@ const UpdateMedecin = () => {
                                 fullWidth
                                 variant="filled"
                                 type="text"
-                                label="Lieu de naissance"
+                                label="Clinique"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.lieu_naissance}
-                                name="lieu_naissance"
-                                error={!!touched.lieu_naissance && !!errors.lieu_naissance}
-                                helperText={touched.lieu_naissance && errors.lieu_naissance}
+                                value={values.id_clinique}
+                                name="id_clinique"
+                                error={!!touched.id_clinique && !!errors.id_clinique}
+                                helperText={touched.id_clinique && errors.id_clinique}
                                 sx={{ gridColumn: "span 2" }}
                             />
                             <TextField
@@ -126,14 +133,14 @@ const UpdateMedecin = () => {
                             <TextField
                                 fullWidth
                                 variant="filled"
-                                type="text"
-                                label="Adresse"
+                                type="password"
+                                label="Password"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.adresse}
-                                name="adresse"
-                                error={!!touched.adresse && !!errors.adresse}
-                                helperText={touched.adresse && errors.adresse}
+                                value={values.password}
+                                name="password"
+                                error={!!touched.password && !!errors.password}
+                                helperText={touched.password && errors.password}
                                 sx={{ gridColumn: "span 2" }}
                             />
                         </Box>
@@ -149,14 +156,13 @@ const UpdateMedecin = () => {
     );
 };
 
-
 const checkoutSchema = yup.object().shape({
     nom: yup.string().required("required"),
     prenom: yup.string().required("required"),
     date_naissance: yup.string().required("required"),
-    lieu_naissance: yup.string().required("required"),
+    id_clinique: yup.string().required("required"),
     email: yup.string().required("required"),
-    adresse: yup.string().required("required"),
-});
+    password: yup.string().required("required"),
+  });
 
 export default UpdateMedecin;

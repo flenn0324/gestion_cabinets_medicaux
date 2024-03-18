@@ -6,6 +6,7 @@ import AddMedecin from '../../pages/AdminPanel/Medecin/AddMedecin';
 import ReadMedecin from '../../pages/AdminPanel/Medecin/ReadMedecin';
 import UpdateMedecin from '../../pages/AdminPanel/Medecin/UpdateMedecin';
 import { useLocation } from 'react-router-dom';
+import { store } from "./store";
 
 
 afterEach(()=>{
@@ -14,7 +15,7 @@ afterEach(()=>{
 
 
 test('should render the medecin component',()=>{
-    render(<BrowserRouter><Medecins /></BrowserRouter>
+    render(<Provider store={store}><BrowserRouter><Medecins /></BrowserRouter> </Provider>
      );
     const MedecinElement = screen.getByTestId('medecin');
     expect(MedecinElement).toBeInTheDocument();

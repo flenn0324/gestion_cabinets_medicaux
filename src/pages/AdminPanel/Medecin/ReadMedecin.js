@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { Box, Button } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { useRemoveDoctorMutation } from "../../../store/apis/DoctorsApi";
 
 const ReadMedecin = () => {
     const [modal, setModal] = React.useState(false);
@@ -20,9 +21,14 @@ const ReadMedecin = () => {
     const location = useLocation();
     const { medecin } = location.state ? location.state : "";
 
-    const handleRemoveSociete = async () => {
+    const [removeMedecin, results] = useRemoveDoctorMutation();
+
+
+
+    const handleRemoveMedecin = async () => {
+        await removeMedecin(medecin);
         setModal(!modal);
-        window.location.replace("/admin");
+        window.location.replace("/admin/medecins");
     };
 
     return (
@@ -70,11 +76,7 @@ const ReadMedecin = () => {
                             </div>
                             <div className="ms-5 my-1">
                                 <span className="text-black fs-5">Date de naissance :</span>
-                                <span> {medecin ? medecin.datenaissance : medecin} </span>
-                            </div>
-                            <div className="ms-5 my-1">
-                                <span className="text-black fs-5">Lieu de naissance :</span>
-                                <span> {medecin ? medecin.lieu_naissance : medecin} </span>
+                                <span> {medecin ? medecin.date_naissance : medecin} </span>
                             </div>
                             <div className="ms-5 my-1">
                                 <span className="text-black fs-5">Email :</span>
@@ -85,7 +87,7 @@ const ReadMedecin = () => {
                                 <span> {medecin ? medecin.adresse : medecin} </span>
                             </div>
                         </Col>
-    
+
                     </Row>
                 </Container>
                 <Modal isOpen={modal} toggle={toggle}>
@@ -93,7 +95,7 @@ const ReadMedecin = () => {
                         Etes vous sur de vouloir supprimer ce medecin ?
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={handleRemoveSociete}>
+                        <Button color="primary" onClick={handleRemoveMedecin}>
                             Oui
                         </Button>{" "}
                         <Button color="secondary" onClick={toggle}>
