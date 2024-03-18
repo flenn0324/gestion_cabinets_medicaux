@@ -30,7 +30,7 @@ const UpdateMedecin = () => {
     };
 
     return (
-        <Box m="20px">
+        <Box m="20px" data-testid="update-medecin">
             <HeadContent
                 title="Modifier Medecin"
                 subtitle="Modifier les informations d'un medecin"

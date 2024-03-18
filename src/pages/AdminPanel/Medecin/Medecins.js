@@ -9,7 +9,7 @@ import { useFetchDoctorsQuery } from "../../../store/apis/DoctorsApi";
 
 function Medecins() {
 
-    const { data, error, isLoading } = useFetchDoctorsQuery();
+    //const { data, error, isLoading } = useFetchDoctorsQuery();
 
 
     const dataTransformed = [
@@ -85,7 +85,7 @@ function Medecins() {
     ];
 
     return (
-        <div>
+        <div data-testid="medecin">
             <Box m="20px">
                 <HeadContent title="Medecins" subtitle="Listes des medecins" />
                 <Container fluid>

@@ -28,9 +28,12 @@ import Medecins from './pages/AdminPanel/Medecin/Medecins';
 import AddMedecin from './pages/AdminPanel/Medecin/AddMedecin';
 import ReadMedecin from './pages/AdminPanel/Medecin/ReadMedecin';
 import UpdateMedecin from './pages/AdminPanel/Medecin/UpdateMedecin';
+import { store } from "./store";
+import { Provider } from "react-redux";
 
 function App() {
   return (
+    <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -70,6 +73,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </Provider>
   );
 }
 

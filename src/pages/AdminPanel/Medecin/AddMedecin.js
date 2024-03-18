@@ -26,7 +26,7 @@ const AddMedecin = () => {
   };
 
   return (
-    <Box m="20px">
+    <Box m="20px" data-testid="add-medecin">
       <HeadContent
         title="Ajouter Medecin"
         subtitle="Ajouter un nouveau medecin"

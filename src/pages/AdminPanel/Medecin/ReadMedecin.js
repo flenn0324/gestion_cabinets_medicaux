@@ -26,7 +26,7 @@ const ReadMedecin = () => {
     };
 
     return (
-        <div>
+        <div data-testid="read-medecin">
             <Box m="20px">
                 <HeadContent
                     title="Consulter un medecin"

@@ -58,7 +58,7 @@ function Cliniques() {
   ];
 
   return (
-    <div>
+    <div data-testid="cliniques">
       <Box m="20px">
         <HeadContent title="Cliniques" subtitle="Listes des cliniques" />
         <Container fluid>

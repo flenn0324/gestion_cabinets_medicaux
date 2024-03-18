@@ -23,7 +23,7 @@ const AddClinique = () => {
   
 
   return (
-    <Box m="20px">
+    <Box m="20px" data-testid="add-clinique">
       <HeadContent
           title="Nouvelle clinique"
           subtitle="Ajouter une nouvelle clinique"

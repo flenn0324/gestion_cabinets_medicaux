@@ -32,7 +32,7 @@ const UpdateClinique = () => {
 
 
     return (
-        <Box m="20px">
+        <Box m="20px" data-testid="update-clinique">
             <HeadContent
                 title="Modifier clinique"
                 subtitle="Modifier cette clinique"
