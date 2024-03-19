@@ -85,4 +85,131 @@ router.post("/:nss", async (req, res) => {
   
 })
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Patients
+ *     description: Operations related to patients by doctor
+ */
+
+// Create a patient
+/**
+ * @swagger
+ * /doctor/patients/create:
+ *   post:
+ *     summary: Create a new patient
+ *     tags: [Patients]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Patient'
+ *     responses:
+ *       '201':
+ *         description: Patient created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Patient'
+ *       '400':
+ *         description: Patient with given NSS already exists
+ *       '401':
+ *         description: Error creating patient
+ */
+
+// Get all patients
+/**
+ * @swagger
+ * /doctor/patients:
+ *   get:
+ *     summary: Get all patients
+ *     tags: [Patients]
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved patients
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 listOfPatients:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Patient'
+ *                 message:
+ *                   type: string
+ */
+
+// Get one patient by NSS
+/**
+ * @swagger
+ * /doctor/patients/{nss}:
+ *   get:
+ *     summary: Get a patient by NSS
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: nss
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved patient
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Patient'
+ */
+
+// Delete a patient by NSS
+/**
+ * @swagger
+ * /doctor/patients/{nss}:
+ *   delete:
+ *     summary: Delete a patient by NSS
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: nss
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '201':
+ *         description: Patient deleted successfully
+ *       '401':
+ *         description: Error deleting patient
+ */
+
+// Update a patient by NSS
+/**
+ * @swagger
+ * /doctor/patients/{nss}:
+ *   post:
+ *     summary: Update a patient by NSS
+ *     tags: [Patients]
+ *     parameters:
+ *       - in: path
+ *         name: nss
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Patient'
+ *     responses:
+ *       '201':
+ *         description: Patient updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Patient'
+ *       '401':
+ *         description: Error updating patient
+ */
 module.exports = router

@@ -3,6 +3,9 @@ const Clinique = require("../../../models/Clinique")
 const accessMiddleware = require("../../../middlewares/access")
 
 
+
+
+
 // createion clinique
 router.post("/create", async (req, res)=>{
   // récupération des informations 
@@ -107,7 +110,122 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * tags:
+ *   name: Cliniques 
+ *   description: API endpoints for managing cliniques by Admin
+ */
 
+/**
+ * @swagger
+ * /admin/cliniques/create:
+ *   post:
+ *     summary: Create a new clinic
+ *     tags: [Cliniques]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Clinique'
+ *     responses:
+ *       '201':
+ *         description: Clinic created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Clinique'
+ *       '401':
+ *         description: Error occurred while adding the clinic
+ *
+ * /admin/cliniques:
+ *   get:
+ *     summary: Get all clinics
+ *     tags: [Cliniques]
+ *     responses:
+ *       '200':
+ *         description: List of all clinics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 listeClinique:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Clinique'
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       '401':
+ *         description: Error occurred while retrieving clinics
+ *
+ * /admin/cliniques/{id}:
+ *   get:
+ *     summary: Get a single clinic by ID
+ *     tags: [Cliniques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the clinic to retrieve
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Clinic retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Clinique'
+ *       '400':
+ *         description: Clinic does not exist
+ *
+ *   delete:
+ *     summary: Delete a clinic by ID
+ *     tags: [Cliniques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the clinic to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Clinic deleted successfully
+ *       '400':
+ *         description: Error occurred while deleting the clinic
+ *
+ *   put:
+ *     summary: Update a clinic by ID
+ *     tags: [Cliniques]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the clinic to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Clinique'
+ *     responses:
+ *       '200':
+ *         description: Clinic updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Clinique'
+ *       '404':
+ *         description: Clinic to update does not exist
+ *       '500':
+ *         description: Error occurred while updating the clinic
+ */
 
 
 

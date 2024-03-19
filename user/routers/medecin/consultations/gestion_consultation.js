@@ -73,5 +73,136 @@ router.post("/:id", async (req, res)=>{
 })
 
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Consultations
+ *     description: Operations related to consultations by Doctor
+ */
+
+// Create new consultation
+/**
+ * @swagger
+ * /doctor/patient/consultations/create:
+ *   post:
+ *     summary: Create a new consultation
+ *     tags: [Consultations]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Consultation'
+ *     responses:
+ *       '201':
+ *         description: Consultation created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Consultation'
+ *       '401':
+ *         description: Error creating consultation
+ */
+
+// Delete consultation
+/**
+ * @swagger
+ * /doctor/patient/consultations/{id}:
+ *   delete:
+ *     summary: Delete a consultation
+ *     tags: [Consultations]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '201':
+ *         description: Consultation deleted successfully
+ *       '401':
+ *         description: Error deleting consultation
+ */
+
+// Get one consultation
+/**
+ * @swagger
+ * /doctor/patient/consultations/{id}:
+ *   get:
+ *     summary: Get a consultation by ID
+ *     tags: [Consultations]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved consultation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Consultation'
+ */
+
+// Get all consultations for a specific patient
+/**
+ * @swagger
+ * /doctor/patient/consultations/all/{nss}:
+ *   get:
+ *     summary: Get all consultations for a specific patient
+ *     tags: [Consultations]
+ *     parameters:
+ *       - in: path
+ *         name: nss
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved consultations
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 consultationList:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Consultation'
+ */
+
+// Update consultation
+/**
+ * @swagger
+ * /doctor/patient/consultations/{id}:
+ *   put:
+ *     summary: Update a consultation by ID
+ *     tags: [Consultations]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Consultation'
+ *     responses:
+ *       '201':
+ *         description: Consultation updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Consultation'
+ *       '401':
+ *         description: Error updating consultation
+ */
+
+
 
 module.exports = router

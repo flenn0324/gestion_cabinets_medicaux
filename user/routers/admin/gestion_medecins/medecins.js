@@ -11,7 +11,7 @@ const accessMiddleware = require("../../../middlewares/access")
  * @swagger
  * tags:
  *   name: Doctors
- *   description: API endpoints for managing doctors
+ *   description: API endpoints for managing doctors by Admin
  */
 
 /**
@@ -141,6 +141,69 @@ router.post("/create", async (req, res)=>{
   }
 
 })
+
+/**
+ * @swagger
+ * /admin/doctor/{id}:
+ *   delete:
+ *     summary: Delete a doctor
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the doctor to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Doctor deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 doctorInfos:
+ *                   type: object
+ *                   description: Information about the deleted doctor
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       '400':
+ *         description: Doctor does not exist
+ *
+ *   post:
+ *     summary: Update a doctor
+ *     tags: [Doctors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the doctor to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Doctor'
+ *     responses:
+ *       '201':
+ *         description: Doctor updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 doctorInfos:
+ *                   type: object
+ *                   description: Information about the updated doctor
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ */
+
 
 // to delete a doctor
 router.delete("/:id", async (req, res)=>{

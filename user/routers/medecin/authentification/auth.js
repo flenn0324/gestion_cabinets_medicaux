@@ -6,6 +6,58 @@ const jwt = require("jsonwebtoken")
 function generateAccessToken(infos) {
   return jwt.sign({...infos}, process.env.SECRET_ACCESS_TOKEN, { expiresIn: '3600s' });
 }
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: Authentication endpoints
+ */
+
+/**
+ * @swagger
+ * /doctor/signin:
+ *   post:
+ *     summary: Sign in to the doctor account
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               email: anis@gmail.com
+ *               password: anis
+ *     responses:
+ *       '200':
+ *         description: Successful signin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 userInfo:
+ *                   type: object
+ *                   properties:
+ *                     Token:
+ *                       type: string
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       '400':
+ *         description: Invalid credentials
+ *       '401':
+ *         description: Email does not exist
+ */
 // sigin
 router.post("/signin", async (req, res)=>{
   // recupération des informations

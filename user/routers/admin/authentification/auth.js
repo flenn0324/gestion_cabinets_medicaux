@@ -8,6 +8,7 @@ function generateAccessToken(infos) {
   return jwt.sign({...infos}, process.env.SECRET_ACCESS_TOKEN, { expiresIn: '3600s' });
 }
 
+
 /**
  * @swagger
  * tags:
@@ -17,34 +18,47 @@ function generateAccessToken(infos) {
 
 /**
  * @swagger
- * path:
- *  /admin/signin:
- *    post:
- *      summary: Sign in to the admin account
- *      tags: [Authentication]
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                email:
- *                  type: string
- *                password:
- *                  type: string
- *              example:
- *                email: admin@example.com
- *                password: password123
- *      responses:
- *        "200":
- *          description: Successful signin
- *        "400":
- *          description: Invalid credentials
- *        "401":
- *          description: Email does not exist
+ * /admin/signin:
+ *   post:
+ *     summary: Sign in to the admin account
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               email: admin@example.com
+ *               password: password123
+ *     responses:
+ *       '200':
+ *         description: Successful signin
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 userInfo:
+ *                   type: object
+ *                   properties:
+ *                     Token:
+ *                       type: string
+ *                     user:
+ *                       $ref: '#/components/schemas/User'
+ *                 message:
+ *                   type: string
+ *                   description: Success message
+ *       '400':
+ *         description: Invalid credentials
+ *       '401':
+ *         description: Email does not exist
  */
-
 router.post('/signin', async (req, res) => {
   // get the information 
   const information_admin = {

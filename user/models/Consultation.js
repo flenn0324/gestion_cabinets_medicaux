@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
 
+
 // create the schema
 const consultationSchema = new mongoose.Schema({
   idMedecin: String,
