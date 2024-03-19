@@ -17,6 +17,7 @@ const doctorAuthRouter = require("./user/routers/medecin/authentification/auth")
 const gestionPatientsRouter = require("./user/routers/medecin/gestion_patient/patient")
 const gestionSignesVitauxRouter = require("./user/routers/medecin/dossier_medical/gestion_signes_vitaux")
 const documentMedicalRouter = require("./user/routers/medecin/dossier_medical/document_medical")
+const consultationRouter = require("./user/routers/medecin/consultations/gestion_consultation")
 
 const app = express()
 
@@ -44,7 +45,7 @@ app.use("/doctor", doctorAuthRouter)
 app.use("/doctor/patients", gestionPatientsRouter)
 app.use("/doctor/patient/signesvitaux/", gestionSignesVitauxRouter)
 app.use("/doctor/document_medical", documentMedicalRouter)
-
+app.use("/doctor/patient/consultations", consultationRouter)
 
 // database connection 
 mongoose.connect(process.env.URI)
