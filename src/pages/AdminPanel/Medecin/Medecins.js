@@ -96,7 +96,7 @@ function Medecins() {
                         </Col>
                     </Row>
                 </Container>
-                <Box m="40px 0 0 0" height="75vh">
+                <Box m="40px 0 0 0">
                     <DataGrid
                         checkboxSelection
                         loading={isLoading}

@@ -35,7 +35,7 @@ const UpdateClinique = () => {
         values.id = clinique.id;
         console.log(values);
         await UpdateClinique(values);
-        //window.location.replace('/admin/cliniques');
+        window.location.replace('/admin/cliniques');
     };
 
 

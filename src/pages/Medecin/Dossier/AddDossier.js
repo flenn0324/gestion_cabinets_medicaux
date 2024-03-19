@@ -4,9 +4,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadContent from '../../../components/dashboard/HeadContent';
+import { useAddDossierMutation } from "../../../store/apis/DossiersApi";
 
 
 const AddDossier = () => {
+  const[AddPatient,results] = useAddDossierMutation();
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
@@ -15,9 +17,11 @@ const AddDossier = () => {
   }
 
   const handleFormSubmit = async (values) => {
-    console.log(values)
-    alert()
-    window.location.replace('/medecin')
+    console.log(values);
+    await AddPatient(values);
+    alert();
+    console.log(results);
+    window.location.replace('/medecin/dossiers'); 
   };
 
   
@@ -58,10 +62,10 @@ const AddDossier = () => {
                 label="Numéro sécurité social"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.siren}
-                name="nss"
-                error={!!touched.siren && !!errors.siren}
-                helperText={touched.siren && errors.siren}
+                value={values.numero_securite_social}
+                name="numero_securite_social"
+                error={!!touched.numero_securite_social && !!errors.numero_securite_social}
+                helperText={touched.numero_securite_social && errors.numero_securite_social}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -71,10 +75,10 @@ const AddDossier = () => {
                 label="Nom"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.greffe}
+                value={values.nom}
                 name="nom"
-                error={!!touched.greffe && !!errors.greffe}
-                helperText={touched.greffe && errors.greffe}
+                error={!!touched.nom && !!errors.nom}
+                helperText={touched.nom && errors.nom}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -84,10 +88,10 @@ const AddDossier = () => {
                 label="Prénom"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.forme_sociale}
+                value={values.prenom}
                 name="prenom"
-                error={!!touched.forme_sociale && !!errors.forme_sociale}
-                helperText={touched.forme_sociale && errors.forme_sociale}
+                error={!!touched.prenom && !!errors.prenom}
+                helperText={touched.prenom && errors.prenom}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -97,36 +101,10 @@ const AddDossier = () => {
                 label="Date de naissance"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.denomination}
-                name="datenaissance"
-                error={!!touched.denomination && !!errors.denomination}
-                helperText={touched.denomination && errors.denomination}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="phone"
-                label="Téléphone portable"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.denomination}
-                name="telephone"
-                error={!!touched.denomination && !!errors.denomination}
-                helperText={touched.denomination && errors.denomination}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="email"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.denomination}
-                name="email"
-                error={!!touched.denomination && !!errors.denomination}
-                helperText={touched.denomination && errors.denomination}
+                value={values.date_naissance}
+                name="date_naissance"
+                error={!!touched.date_naissance && !!errors.date_naissance}
+                helperText={touched.date_naissance && errors.date_naissance}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -136,36 +114,36 @@ const AddDossier = () => {
                 label="Genre"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.objet_sociale}
+                value={values.genre}
                 name="genre"
-                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                helperText={touched.objet_sociale && errors.objet_sociale}
+                error={!!touched.genre && !!errors.genre}
+                helperText={touched.genre && errors.genre}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Adresse"
+                label="Numero rue"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.objet_sociale}
-                name="adresse"
-                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                helperText={touched.objet_sociale && errors.objet_sociale}
+                value={values.numero_rue}
+                name="numero_rue"
+                error={!!touched.numero_rue && !!errors.numero_rue}
+                helperText={touched.numero_rue && errors.numero_rue}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Ville"
+                label="Nom rue"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.objet_sociale}
-                name="ville"
-                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                helperText={touched.objet_sociale && errors.objet_sociale}
+                value={values.nom_rue}
+                name="nom_rue"
+                error={!!touched.nom_rue && !!errors.nom_rue}
+                helperText={touched.nom_rue && errors.nom_rue}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -175,10 +153,36 @@ const AddDossier = () => {
                 label="Code postal"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.objet_sociale}
-                name="codepostal"
-                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                helperText={touched.objet_sociale && errors.objet_sociale}
+                value={values.code_postal}
+                name="code_postal"
+                error={!!touched.code_postal && !!errors.code_postal}
+                helperText={touched.code_postal && errors.code_postal}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Ville"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.ville}
+                name="ville"
+                error={!!touched.ville && !!errors.ville}
+                helperText={touched.ville && errors.ville}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Pays"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.pays}
+                name="pays"
+                error={!!touched.pays && !!errors.pays}
+                helperText={touched.pays && errors.pays}
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
@@ -198,28 +202,28 @@ const AddDossier = () => {
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;*/
 
 const checkoutSchema = yup.object().shape({
-  nss: yup.string().required("required"),
+  numero_securite_social: yup.string().required("required"),
   nom: yup.string().required("required"),
   prenom: yup.string().required("required"),
-  datenaissance: yup.string().required("required"),
+  date_naissance: yup.string().required("required"),
   genre: yup.string().required("required"),
-  adresse: yup.string().required("required"),
-  ville: yup.date().required("required"),
-  codepostal: yup.string().required("required"),
-  telephone: yup.string().required("required"),
-  email: yup.string().required("required"),
+  numero_rue: yup.string().required("required"),
+  nom_rue: yup.string().required("required"),
+  code_postal: yup.string().required("required"),
+  ville: yup.string().required("required"),
+  pays: yup.string().required("required"),
 });
 const initialValues = {
-  nss: "",
+  numero_securite_social: "",
   nom: "",
   prenom: "",
+  date_naissance: "",
   genre: "",
-  datenaissance:"" ,
-  adresse: "",
+  numero_rue: "",
+  nom_rue: "",
+  code_postal: "",
   ville: "",
-  codepostal: "",
-  telephone: "",
-  email: "",
+  pays: "",
 };
 
 export default AddDossier;

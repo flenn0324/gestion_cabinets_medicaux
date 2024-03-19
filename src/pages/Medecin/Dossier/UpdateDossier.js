@@ -5,6 +5,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadContent from '../../../components/dashboard/HeadContent';
 import { useLocation } from "react-router-dom";
+import { useUpdateDossierMutation } from "../../../store/apis/DossiersApi";
 
 
 const UpdateDossier = () => {
@@ -13,14 +14,16 @@ const UpdateDossier = () => {
   const { dossier } = location.state ? location.state : "";
 
   const initialValues = {
-    nss : dossier.nss,
+    numero_securite_social : dossier.numero_securite_social,
     nom : dossier.nom,
     prenom: dossier.prenom,
-    datenaissance: dossier.datenaissance,
+    date_naissance: dossier.date_naissance,
     genre: dossier.genre,
-    telephone: dossier.telephone,
-    email: dossier.email,
-    adresse: dossier.adresse,
+    numero_rue: dossier.numero_rue,
+    nom_rue: dossier.nom_rue,
+    code_postal: dossier.code_postal,
+    ville: dossier.ville,
+    pays: dossier.pays,
   };
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -29,10 +32,14 @@ const UpdateDossier = () => {
     return (<Alert severity="success">This is a success alert — check it out!</Alert>);
   }
 
+  const [UpdatePatient, results] = useUpdateDossierMutation();
+
   const handleFormSubmit = async (values) => {
-    console.log(values)
-    alert()
-    window.location.replace('/medecin')
+        values.id = dossier.id;
+        console.log(values);
+        const reponse = await UpdatePatient(values);
+        console.log(reponse);
+        window.location.replace('/medecin/dossiers');
   };
 
   
@@ -73,10 +80,10 @@ const UpdateDossier = () => {
                 label="Numéro sécurité social"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.nss}
-                name="nss"
-                error={!!touched.nss && !!errors.nss}
-                helperText={touched.nss && errors.nss}
+                value={values.numero_securite_social}
+                name="numero_securite_social"
+                error={!!touched.numero_securite_social && !!errors.numero_securite_social}
+                helperText={touched.numero_securite_social && errors.numero_securite_social}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -112,36 +119,10 @@ const UpdateDossier = () => {
                 label="Date de naissance"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.datenaissance}
-                name="datenaissance"
-                error={!!touched.datenaissance && !!errors.datenaissance}
-                helperText={touched.datenaissance && errors.datenaissance}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="phone"
-                label="Téléphone portable"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.telephone}
-                name="telephone"
-                error={!!touched.telephone && !!errors.telephone}
-                helperText={touched.telephone && errors.telephone}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="email"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                value={values.date_naissance}
+                name="date_naissance"
+                error={!!touched.date_naissance && !!errors.date_naissance}
+                helperText={touched.date_naissance && errors.date_naissance}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -161,13 +142,39 @@ const UpdateDossier = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Adresse"
+                label="Numero rue"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.adresse}
-                name="adresse"
-                error={!!touched.adresse && !!errors.adresse}
-                helperText={touched.adresse && errors.adresse}
+                value={values.numero_rue}
+                name="numero_rue"
+                error={!!touched.numero_rue && !!errors.numero_rue}
+                helperText={touched.numero_rue && errors.numero_rue}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Nom rue"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.nom_rue}
+                name="nom_rue"
+                error={!!touched.nom_rue && !!errors.nom_rue}
+                helperText={touched.nom_rue && errors.nom_rue}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Code postal"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.code_postal}
+                name="code_postal"
+                error={!!touched.code_postal && !!errors.code_postal}
+                helperText={touched.code_postal && errors.code_postal}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -187,13 +194,13 @@ const UpdateDossier = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Code postal"
+                label="Pays"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.codepostal}
-                name="codepostal"
-                error={!!touched.codepostal && !!errors.codepostal}
-                helperText={touched.codepostal && errors.codepostal}
+                value={values.pays}
+                name="pays"
+                error={!!touched.pays && !!errors.pays}
+                helperText={touched.pays && errors.pays}
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
@@ -212,18 +219,18 @@ const UpdateDossier = () => {
 /*const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;*/
 
-const checkoutSchema = yup.object().shape({
-  nss: yup.string().required("required"),
-  nom: yup.string().required("required"),
-  prenom: yup.string().required("required"),
-  datenaissance: yup.string().required("required"),
-  genre: yup.string().required("required"),
-  adresse: yup.string().required("required"),
-  ville: yup.date().required("required"),
-  codepostal: yup.string().required("required"),
-  telephone: yup.string().required("required"),
-  email: yup.string().required("required"),
-});
+  const checkoutSchema = yup.object().shape({
+    numero_securite_social: yup.string().required("required"),
+    nom: yup.string().required("required"),
+    prenom: yup.string().required("required"),
+    date_naissance: yup.string().required("required"),
+    genre: yup.string().required("required"),
+    numero_rue: yup.string().required("required"),
+    nom_rue: yup.string().required("required"),
+    code_postal: yup.string().required("required"),
+    ville: yup.string().required("required"),
+    pays: yup.string().required("required"),
+  });
 
 
 export default UpdateDossier;

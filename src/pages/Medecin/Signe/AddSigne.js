@@ -5,6 +5,8 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import HeadContent from '../../../components/dashboard/HeadContent';
 import { TextField, Button, Box } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import { useAddSigneMutation } from '../../../store';
 
 
 
@@ -12,14 +14,24 @@ const AddSigne = () => {
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
+    const[AddSigne,results] = useAddSigneMutation();
+
     const alert = () => {
         return (<Alert severity="success">This is a success alert — check it out!</Alert>);
     }
 
+    const location = useLocation();
+    const { signes } = location.state ? location.state : "";
+    console.log(signes);
+
     const handleFormSubmit = async (values) => {
-        console.log(values)
-        alert()
-        window.location.replace('/medecin')
+        console.log(values);
+        values.nss = signes;
+        console.log(values);
+        await AddSigne(values);
+        alert();
+        console.log(results);
+        window.location.replace('/medecin/dossiers')
     };
 
 
@@ -53,9 +65,6 @@ const AddSigne = () => {
                                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                             }}
                         >
-                            <div>
-                                <h4>Dossier patient : .......</h4>
-                            </div>
 
                             <TextField
                                 fullWidth
@@ -64,10 +73,10 @@ const AddSigne = () => {
                                 label="Fréquence cardiaque"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.siren}
-                                name="frequence"
-                                error={!!touched.siren && !!errors.siren}
-                                helperText={touched.siren && errors.siren}
+                                value={values.frequence_cardiaque}
+                                name="frequence_cardiaque"
+                                error={!!touched.frequence_cardiaque && !!errors.frequence_cardiaque}
+                                helperText={touched.frequence_cardiaque && errors.frequence_cardiaque}
                                 sx={{ gridColumn: "span 4" }}
                             />
 
@@ -78,10 +87,10 @@ const AddSigne = () => {
                                 label="Tension Arterielle"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.objet_sociale}
-                                name="tension"
-                                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                                helperText={touched.objet_sociale && errors.objet_sociale}
+                                value={values.tension_arterielle}
+                                name="tension_arterielle"
+                                error={!!touched.tension_arterielle && !!errors.tension_arterielle}
+                                helperText={touched.tension_arterielle && errors.tension_arterielle}
                                 sx={{ gridColumn: "span 4" }}
                             />
 
@@ -92,10 +101,10 @@ const AddSigne = () => {
                                 label="Fréquence respératoire"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.objet_sociale}
+                                value={values.frequence_resperatoire}
                                 name="frequence_resperatoire"
-                                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                                helperText={touched.objet_sociale && errors.objet_sociale}
+                                error={!!touched.frequence_resperatoire && !!errors.frequence_resperatoire}
+                                helperText={touched.frequence_resperatoire && errors.frequence_resperatoire}
                                 sx={{ gridColumn: "span 4" }}
                             />
 
@@ -106,10 +115,10 @@ const AddSigne = () => {
                                 label="Température corporelle"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={values.objet_sociale}
-                                name="temperature"
-                                error={!!touched.objet_sociale && !!errors.objet_sociale}
-                                helperText={touched.objet_sociale && errors.objet_sociale}
+                                value={values.temperature_corporelle}
+                                name="temperature_corporelle"
+                                error={!!touched.temperature_corporelle && !!errors.temperature_corporelle}
+                                helperText={touched.temperature_corporelle && errors.temperature_corporelle}
                                 sx={{ gridColumn: "span 4" }}
                             />
 
@@ -130,16 +139,16 @@ const AddSigne = () => {
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;*/
 
 const checkoutSchema = yup.object().shape({
-    frequence: yup.string().required("required"),
+    frequence_cardiaque: yup.string().required("required"),
     frequence_resperatoire: yup.string().required("required"),
-    tension: yup.string().required("required"),
-    temperature: yup.string().required("required"),
+    tension_arterielle: yup.string().required("required"),
+    temperature_corporelle: yup.string().required("required"),
 });
 const initialValues = {
-    frequence: "",
+    frequence_cardiaque: "",
     frequence_resperatoire: "",
-    tension: "",
-    temperature: "",
+    tension_arterielle: "",
+    temperature_corporelle: "",
 };
 
 export default AddSigne;

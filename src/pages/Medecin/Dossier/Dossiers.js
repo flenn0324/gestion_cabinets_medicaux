@@ -5,55 +5,44 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useFetchDossiersQuery } from "../../../store/apis/DossiersApi";
 
 function Dossiers() {
 
-    const dataTransformed = [
-        {
-          id:1,
-          nss: 12345,
-          nom: 'zakaria',
-          prenom: 'Paris',
-          datenaissance: 'SARL',
-          genre: 'Ma Société 1',
-          adresse: 'Fourniture de services 1',
-          ville: '2024-02-07',
-          codepostal: 'Illimitée',
-          telephone: '10000 EUR',
-          email: 'Annuel',
-        },
-        {
-            id:2,
-            nss: 1,
-            nom: 'zakaria',
-            prenom: 'Paris',
-            datenaissance: 'SARL',
-            genre: 'Ma Société 1',
-            adresse: 'Fourniture de services 1',
-            ville: '2024-02-07',
-            codepostal: 'Illimitée',
-            telephone: '10000 EUR',
-            email: 'Annuel',
-        },
-        {
-            id:3,
-            nss: 1,
-            nom: 'pino',
-            prenom: 'Paris',
-            datenaissance: 'SARL',
-            genre: 'Ma Société 1',
-            adresse: 'Fourniture de services 1',
-            ville: '2024-02-07',
-            codepostal: 'Illimitée',
-            telephone: '10000 EUR',
-            email: 'Annuel',
-        },
-      ];
+  const { data, error, isLoading } = useFetchDossiersQuery();
+
+  if (error) {
+    return (
+      <Container>
+        <h1 className="mt-5 text-center">ERREUR 500</h1>
+        <h3 className="m-5 text-center">
+          erreur de chargement du liste des patients
+        </h3>
+      </Container>
+    );
+  }
+
+
+  const dataTransformed = isLoading ? [] : data.listOfPatients.map((item) => {
+    return {
+      id: item._id,
+      nom: item.nom,
+      prenom: item.prenom,
+      numero_securite_social: item.numero_securite_social,
+      date_naissance: item.date_naissance,
+      genre: item.genre,
+      numero_rue: item.address?.numero_rue || '', 
+      nom_rue: item.address?.nom_rue || '', 
+      code_postal: item.address?.code_postal || '', 
+      ville: item.address?.ville || '', 
+      pays: item.address?.pays || '',
+    };
+  });
 
   const columns = [
     { field: "id", headerName: "ID" },
     {
-        field: "nss",
+        field: "numero_securite_social",
         headerName: "Num secu social",
         flex: 1,
       },
@@ -68,7 +57,7 @@ function Dossiers() {
       flex: 1,
     },
     {
-      field: "datenaissance",
+      field: "date_naissance",
       headerName: "Date de naissance",
       flex: 1,
     },
@@ -116,7 +105,7 @@ function Dossiers() {
             </Col>
           </Row>
         </Container>
-        <Box m="40px 0 0 0" height="75vh">
+        <Box m="40px 0 0 0">
           <DataGrid
             checkboxSelection
             rows={dataTransformed}

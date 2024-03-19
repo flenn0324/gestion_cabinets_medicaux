@@ -6,8 +6,7 @@ const signesApi = createApi({
 
     reducerPath: 'signes',
     baseQuery: fetchBaseQuery({
-        baseUrl:'http://localhost:3000/medecin',
-        credentials: 'include',
+        baseUrl:'http://localhost:3000/doctor',
         /*prepareHeaders: (headers) => {
             // Include the token directly in the headers
             headers.set('Authorization', `Bearer ${authToken}`);
@@ -18,9 +17,9 @@ const signesApi = createApi({
         return{
             fetchSignes:builder.query({
                 providesTags:['Signes'],
-                query:()=>{
+                query:(signe)=>{
                     return{
-                        url:'/signes',
+                        url:`/patient/signesvitaux/${signe}`,
                         params:{},
                         method: 'GET',
                     };
@@ -30,44 +29,24 @@ const signesApi = createApi({
                 invalidatesTags:['Signes'],
                 query:(signe)=>{
                     return{
-                        url:'/signes',
+                        url:'/patient/signesvitaux/add',
                         params:{},
                         method: 'POST',
                         body:{
-                            siren:signe.siren,
-                            greffe: signe.greffe,
-                            forme_sociale: signe.forme_sociale,
-                            denomination: signe.denomination,
-                            objet_sociale: signe.objet_sociale,
-                            date: signe.date,
-                            duree: signe.duree,
-                            capital_social: signe.capital_social,
+                            frequence_cardiaque:signe.frequence_cardiaque,
+                            tension_arterielle: signe.tension_arterielle,
+                            frequence_resperatoire: signe.frequence_resperatoire,
+                            temperature_corporelle: signe.temperature_corporelle,
+                            nss: signe.nss,
                         }
                     };
                 }
             }),
-            updateSigne: builder.mutation({
-                invalidatesTags: ['Signes'],
-                query: (signe) => ({
-                  url: `/signes/${signe.id}`,
-                  method: 'PATCH', // Assuming your API supports PUT for updates, adjust accordingly
-                  body: {
-                    siren: signe.siren,
-                    greffe: signe.greffe,
-                    forme_sociale: signe.forme_sociale,
-                    denomination: signe.denomination,
-                    objet_sociale: signe.objet_sociale,
-                    date: signe.date,
-                    duree: signe.duree,
-                    capital_social: signe.capital_social,
-                  },
-                }),
-              }),
             removeSigne: builder.mutation({
                 invalidatesTags:['Signes'],
                 query:(signe)=>{
                     return {
-                        url:`/signes/${signe.id}`,
+                        url:`/patient/signesvitaux/${signe}`,
                         method:'DELETE'
                     };
                 }
@@ -76,5 +55,5 @@ const signesApi = createApi({
     }
 });
 
-export const {useFetchSignesQuery,useAddSigneMutation,useRemoveSigneMutation,useUpdateSigneMutation} = signesApi;
+export const {useFetchSignesQuery,useAddSigneMutation,useRemoveSigneMutation} = signesApi;
 export {signesApi};

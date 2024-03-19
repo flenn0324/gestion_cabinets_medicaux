@@ -21,7 +21,7 @@ const AddClinique = () => {
     await AddClinique(values);
     alert();
     console.log(results);
-    //window.location.replace('/admin/cliniques'); 
+    window.location.replace('/admin/cliniques'); 
   };
 
   

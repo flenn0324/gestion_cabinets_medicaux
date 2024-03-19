@@ -9,49 +9,58 @@ import {
     ModalFooter
 } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useLocation } from "react-router-dom";
+import { useFetchSignesQuery, useRemoveSigneMutation } from "../../../store";
 
 function Documents() {
 
-    const [modal, setModal] = React.useState(false);
+    const location = useLocation();
+    const { signes } = location.state ? location.state : "";
 
-    const toggle = () => setModal(!modal);
 
-    const handleRemoveSigne = async () => {
-        setModal(!modal);
-        window.location.replace("/medecin");
+    const { data, error, isLoading } = useFetchSignesQuery(signes.numero_securite_social);
+
+    const [removeSigne, results] = useRemoveSigneMutation();
+
+
+    if (error) {
+        return (
+            <Container>
+                <h1 className="mt-5 text-center">ERREUR 500</h1>
+                <h3 className="m-5 text-center">
+                    erreur de chargement du liste des patients
+                </h3>
+            </Container>
+        );
+    }
+
+    const handleRemoveSigne = async (id) => {
+        console.log(id);
+        await removeSigne(id);
+        //window.location.replace("/medecin/dossiers");
     };
 
-    const dataTransformed = [
-        {
-            id: 1,
-            frequence_cardiaque: 14.5,
-            tension_arterielle: 10.5,
-            frequence_resperatoire: 4.5,
-            temperature_corporelle: 74.5,
-            date: '12/12/2023'
-        },
-        {
-            id: 2,
-            frequence_cardiaque: 14.5,
-            tension_arterielle: 10.5,
-            frequence_resperatoire: 4.5,
-            temperature_corporelle: 74.5,
-            date: '12/45/7852'
-        },
-        {
-            id: 3,
-            frequence_cardiaque: 14.5,
-            tension_arterielle: 10.5,
-            frequence_resperatoire: 4.5,
-            temperature_corporelle: 74.5,
-            date: '12/45/7852'
-        },
-    ];
+    const dataTransformed = isLoading ? [] : data.listeSignesVitaux.map((item) => {
+        return {
+          id:item._id,
+          nss: item.nss,
+          frequence_cardiaque: item.frequence_cardiaque,
+          frequence_resperatoire: item.frequence_resperatoire,
+          temperature_corporelle: item.temperature_corporelle,
+          tension_arterielle: item.tension_arterielle,
+          date:item.date_creation
+        };
+      });
 
     const columns = [
         {
+            field: "id",
+            headerName: "id",
+            flex: 1,
+        },
+        {
             field: "date",
-            headerName: "date",
+            headerName: "Date",
             flex: 1,
         },
         {
@@ -84,7 +93,7 @@ function Documents() {
                     size="small"
                     variant="outlined"
                     color="error"
-                    onClick={toggle}
+                    onClick={()=> handleRemoveSigne(row.id)}
                 >
                     Supprimer
                 </Button>
@@ -95,24 +104,8 @@ function Documents() {
     return (
         <div>
             <Box m="20px">
-                <HeadContent title="Signes vitaux du dossier numéro : " subtitle="Listes des signes vitaux du patient ......." />
-                <Container fluid>
-                    <Row className="text-end">
-                        <Col>
-                            <Button
-                                size="medium"
-                                className={"m-2 text-white bg-success"}
-                                variant="outlined"
-                                color="success"
-                                component={Link}
-                                to={`/medecin/dossier/signe/add`}
-                            >
-                                Ajouter nouveau
-                            </Button>
-                        </Col>
-                    </Row>
-                </Container>
-                <Box m="40px 0 0 0" height="75vh">
+                <HeadContent title="Signes vitaux du dossier numéro : " subtitle="Listes des signes vitaux du patient " />
+                <Box m="40px 0 0 0">
                     <DataGrid
                         checkboxSelection
                         rows={dataTransformed}
@@ -122,19 +115,6 @@ function Documents() {
                     />
                 </Box>
             </Box>
-            <Modal isOpen={modal} toggle={toggle}>
-                <ModalBody>
-                    Etes vous sur de vouloir supprimer ce signe ?
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={handleRemoveSigne}>
-                        Oui
-                    </Button>{" "}
-                    <Button color="secondary" onClick={toggle}>
-                        Annuler
-                    </Button>
-                </ModalFooter>
-            </Modal>
         </div>
     );
 }

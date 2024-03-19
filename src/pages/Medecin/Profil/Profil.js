@@ -10,10 +10,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Profil = () => {
 
-const profil = {
-  nom : 'zaki',
-  prenom : 'pino'
-}
+  const profil = {
+    nom: 'zaki',
+    prenom: 'pino'
+  }
 
   return (
     <div>
@@ -39,37 +39,24 @@ const profil = {
           <Row className="border py-5">
             <Col lg={6} md={6}>
               <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Nom :</span>
-                <span className="text-black fs-5"> {profil.nom} </span>
+                <span className="text-black fs-5">Nom :</span>
+                <span> {profil ? profil.nom : profil} </span>
               </div>
               <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Prénom :</span>
-                <span className="text-black fs-5">  {profil.prenom} </span>
+                <span className="text-black fs-5">Prénom :</span>
+                <span> {profil ? profil.prenom : profil} </span>
               </div>
               <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Date de naissance :</span>
-                <span className="text-black fs-5">  </span>
+                <span className="text-black fs-5">Date de naissance :</span>
+                <span> {profil ? profil.date_naissance : profil} </span>
               </div>
               <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Lieu de naissance :</span>
-                <span className="text-black fs-5">  </span>
+                <span className="text-black fs-5">Email :</span>
+                <span> {profil ? profil.email : profil} </span>
               </div>
               <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Adresse :</span>
-                <span className="text-black fs-5">  </span>
-              </div>
-              <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Email :</span>
-                <span className="text-black fs-5">  </span>
-              </div>
-              <div className="ms-5 my-1">
-                <span className="text-black fs-5 fw-bold">Mot de passe :</span>
-                <span className="text-black fs-5">  </span>
-              </div>
-            </Col>
-            <Col lg={6} md={6} className="text-center d-flex justify-content-center align-items-center">
-              <div className="ms-5 my-1">
-                <img src="https://picsum.photos/300/200" className="img-fluid rounded-circle" alt="profil pic"/>
+                <span className="text-black fs-5">Adresse :</span>
+                <span> {profil ? profil.adresse : profil} </span>
               </div>
             </Col>
           </Row>

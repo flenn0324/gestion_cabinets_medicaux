@@ -44,6 +44,7 @@ const ProSideBar = () => {
         },
         "& .css-dip3t8": {
           background: `#112244 !important`,
+
         },
         "& a": {
           color: `white !important`,

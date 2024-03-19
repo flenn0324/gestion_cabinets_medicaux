@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/authpages/login';
+import LoginDoctor from './pages/authpages/loginDoctor';
 import AdminLayouts from './layout/dashboard/AdminLayout';
 import MedecinLayout from './layout/dashboard/MedecinLayout';
 import IndexAdmin from './pages/AdminPanel/index';
@@ -37,6 +38,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<LoginDoctor />} />
         <Route path={`/admin`} element={<AdminLayouts />}>
             <Route path={`/admin`} element={<IndexAdmin />} />
             <Route path={`/admin/cliniques`} element={<Cliniques />} />

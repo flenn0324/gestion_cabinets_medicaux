@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useLoginUserMutation } from "../../store";
+import { useLoginDoctorMutation } from "../../store";
 
 
 function Copyright(props) {
@@ -29,26 +29,28 @@ function Copyright(props) {
 }
 
 
-export default function SignInSide() {
+export default function SignInDoctor() {
   
-  const [login, results] = useLoginUserMutation();
+  const [login, results] = useLoginDoctorMutation();
   
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+
     const info = {
       email: data.get('email'),
       password: data.get('password'),
     }
+    console.log(info);
 
     const response = await login(info);
-    console.log(response);
+    console.log(response.data);
+    localStorage.setItem('doctor_id', response.data.doctorInfos.id);
     if(response.data)
     {
-        window.location.replace('/admin'); 
-    } else {window.location.replace('/'); }
-
+        window.location.replace('/medecin'); 
+    } else {window.location.replace('/login'); }
 
   };
 

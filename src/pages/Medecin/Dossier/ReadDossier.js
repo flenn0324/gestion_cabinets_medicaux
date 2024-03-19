@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { Box, Button } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { useRemoveDossierMutation } from "../../../store/apis/DossiersApi";
 
 const ReadDossier = () => {
     const [modal, setModal] = React.useState(false);
@@ -20,9 +21,14 @@ const ReadDossier = () => {
     const location = useLocation();
     const { dossier } = location.state ? location.state : "";
 
-    const handleRemoveSociete = async () => {
+    const [removePatient, results] = useRemoveDossierMutation();
+
+
+
+    const handleRemovePatient = async () => {
+        await removePatient(dossier);
         setModal(!modal);
-        window.location.replace("/medecin");
+        window.location.replace("/medecin/dossiers");
     };
 
     return (
@@ -62,7 +68,7 @@ const ReadDossier = () => {
                             <h3 className="fw-bold mb-4"><u>informations personnelles :</u></h3>
                             <div className="ms-5 my-1">
                                 <span className="text-black fs-5">Numéro sécurité social :</span>
-                                <span> {dossier ? dossier.nss : dossier} </span>
+                                <span> {dossier ? dossier.numero_securite_social : dossier} </span>
                             </div>
                             <div className="ms-5 my-1">
                                 <span className="text-black fs-5">Nom :</span>
@@ -81,20 +87,24 @@ const ReadDossier = () => {
                                 <span> {dossier ? dossier.genre : dossier} </span>
                             </div>
                             <div className="ms-5 my-1">
-                                <span className="text-black fs-5">Téléphone Portable :</span>
-                                <span> {dossier ? dossier.telephone : dossier} </span>
+                                <span className="text-black fs-5">Numero de la rue :</span>
+                                <span> {dossier ? dossier.numero_rue : dossier} </span>
                             </div>
                             <div className="ms-5 my-1">
-                                <span className="text-black fs-5">Email :</span>
-                                <span> {dossier ? dossier.email : dossier} </span>
+                                <span className="text-black fs-5">Nom de la rue :</span>
+                                <span> {dossier ? dossier.nom_rue : dossier} </span>
                             </div>
                             <div className="ms-5 my-1">
-                                <span className="text-black fs-5">Adresse :</span>
-                                <span> {dossier ? dossier.adresse : dossier} </span>
+                                <span className="text-black fs-5">Code postal :</span>
+                                <span> {dossier ? dossier.code_postal : dossier} </span>
                             </div>
                             <div className="ms-5 my-1">
                                 <span className="text-black fs-5">Ville :</span>
                                 <span> {dossier ? dossier.ville : dossier} </span>
+                            </div>
+                            <div className="ms-5 my-1">
+                                <span className="text-black fs-5">Pays :</span>
+                                <span> {dossier ? dossier.pays : dossier} </span>
                             </div>
                         </Col>
                         <Col lg={6} md={6}>
@@ -110,6 +120,7 @@ const ReadDossier = () => {
                                             color="primary"
                                             component={Link}
                                             to={`/medecin/dossier/documents`}
+                                            state={{ doc: dossier.id }}
                                         >
                                             Consulter
                                         </Button>
@@ -123,6 +134,8 @@ const ReadDossier = () => {
                                             color="success"
                                             component={Link}
                                             to={`/medecin/dossier/document/add`}
+                                            state={{ doc: dossier.id }}
+                                            
                                         >
                                             Ajouter
                                         </Button>
@@ -141,6 +154,7 @@ const ReadDossier = () => {
                                             color="primary"
                                             component={Link}
                                             to={`/medecin/dossier/signes`}
+                                            state={{ signes: dossier }}
                                         >
                                             Consulter
                                         </Button>
@@ -154,6 +168,7 @@ const ReadDossier = () => {
                                             color="success"
                                             component={Link}
                                             to={`/medecin/dossier/signe/add`}
+                                            state={{ signes: dossier.numero_securite_social }}
                                         >
                                             Ajouter
                                         </Button>
@@ -168,7 +183,7 @@ const ReadDossier = () => {
                         Etes vous sur de vouloir supprimer ce dossier ?
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={handleRemoveSociete}>
+                        <Button color="primary" onClick={handleRemovePatient}>
                             Oui
                         </Button>{" "}
                         <Button color="secondary" onClick={toggle}>
