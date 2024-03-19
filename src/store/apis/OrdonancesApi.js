@@ -43,7 +43,7 @@ const ordonancesApi = createApi({
                 invalidatesTags: ['Ordonances'],
                 query: (ordonance) => ({
                   url: `/ordonances/${ordonance.id}`,
-                  method: 'PATCH', // Assuming your API supports PUT for updates, adjust accordingly
+                  method: 'PATCH', 
                   body: {
                     nom: ordonance.nom,
                   },
