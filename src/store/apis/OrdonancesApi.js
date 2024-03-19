@@ -34,14 +34,7 @@ const ordonancesApi = createApi({
                         params:{},
                         method: 'POST',
                         body:{
-                            siren:ordonance.siren,
-                            greffe: ordonance.greffe,
-                            forme_sociale: ordonance.forme_sociale,
-                            denomination: ordonance.denomination,
-                            objet_sociale: ordonance.objet_sociale,
-                            date: ordonance.date,
-                            duree: ordonance.duree,
-                            capital_social: ordonance.capital_social,
+                            nom:ordonance.nom,
                         }
                     };
                 }
@@ -52,14 +45,7 @@ const ordonancesApi = createApi({
                   url: `/ordonances/${ordonance.id}`,
                   method: 'PATCH', // Assuming your API supports PUT for updates, adjust accordingly
                   body: {
-                    siren: ordonance.siren,
-                    greffe: ordonance.greffe,
-                    forme_sociale: ordonance.forme_sociale,
-                    denomination: ordonance.denomination,
-                    objet_sociale: ordonance.objet_sociale,
-                    date: ordonance.date,
-                    duree: ordonance.duree,
-                    capital_social: ordonance.capital_social,
+                    nom: ordonance.nom,
                   },
                 }),
               }),

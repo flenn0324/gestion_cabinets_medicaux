@@ -34,14 +34,8 @@ const consultationsApi = createApi({
                         params:{},
                         method: 'POST',
                         body:{
-                            siren:consultation.siren,
-                            greffe: consultation.greffe,
-                            forme_sociale: consultation.forme_sociale,
-                            denomination: consultation.denomination,
-                            objet_sociale: consultation.objet_sociale,
-                            date: consultation.date,
-                            duree: consultation.duree,
-                            capital_social: consultation.capital_social,
+                            nom:consultation.nom,
+                            
                         }
                     };
                 }
@@ -52,14 +46,8 @@ const consultationsApi = createApi({
                   url: `/consultations/${consultation.id}`,
                   method: 'PATCH', // Assuming your API supports PUT for updates, adjust accordingly
                   body: {
-                    siren: consultation.siren,
-                    greffe: consultation.greffe,
-                    forme_sociale: consultation.forme_sociale,
-                    denomination: consultation.denomination,
-                    objet_sociale: consultation.objet_sociale,
-                    date: consultation.date,
-                    duree: consultation.duree,
-                    capital_social: consultation.capital_social,
+                    nom: consultation.nom,
+
                   },
                 }),
               }),

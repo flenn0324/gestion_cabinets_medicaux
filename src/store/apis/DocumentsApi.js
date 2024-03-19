@@ -34,14 +34,7 @@ const documentsApi = createApi({
                         params:{},
                         method: 'POST',
                         body:{
-                            siren:document.siren,
-                            greffe: document.greffe,
-                            forme_sociale: document.forme_sociale,
-                            denomination: document.denomination,
-                            objet_sociale: document.objet_sociale,
-                            date: document.date,
-                            duree: document.duree,
-                            capital_social: document.capital_social,
+                            nom:document.nom,
                         }
                     };
                 }
@@ -52,14 +45,7 @@ const documentsApi = createApi({
                   url: `/documents/${document.id}`,
                   method: 'PATCH', // Assuming your API supports PUT for updates, adjust accordingly
                   body: {
-                    siren: document.siren,
-                    greffe: document.greffe,
-                    forme_sociale: document.forme_sociale,
-                    denomination: document.denomination,
-                    objet_sociale: document.objet_sociale,
-                    date: document.date,
-                    duree: document.duree,
-                    capital_social: document.capital_social,
+                    nom: document.nom,
                   },
                 }),
               }),
